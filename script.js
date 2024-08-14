@@ -93,3 +93,15 @@ function saveTodos() {
     });
     localStorage.setItem('todos', JSON.stringify(todos));
 }
+
+
+// todo.js
+export function addTodoItem(todoText, completed = false) { ... }
+export function saveTodos() { ... }
+export function loadTodos() { ... }
+
+// script.js
+import { addTodoItem, saveTodos, loadTodos } from './todo.js';
+
+document.addEventListener('DOMContentLoaded', loadTodos);
+document.getElementById('add-todo').addEventListener('click', function() { ... });
