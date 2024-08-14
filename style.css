@@ -50,8 +50,16 @@ h1 {
 #todo-list li {
     padding: 10px;
     border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 #todo-list li:last-child {
     border-bottom: none;
+}
+
+#todo-list li.completed span {
+    text-decoration: line-through;
+    color: gray;
 }
