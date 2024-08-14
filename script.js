@@ -1,53 +1,24 @@
-// script.js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="todo-container">
+        <h1>Todo List</h1>
+        <p id="user-points">Points: 0</p>
+        <p id="user-level">Level: 1</p>
+        <input type="text" id="todo-input" placeholder="Enter a new task">
+        <button id="add-todo">Add Task</button>
+        <ul id="todo-list"></ul>
 
-let userPoints = 0;
-let userLevel = 1;
-
-document.addEventListener('DOMContentLoaded', () => {
-    loadTodos();
-    loadUserStats();
-});
-
-function updatePoints(points) {
-    userPoints += points;
-    if (userPoints >= userLevel * 10) {
-        userLevel++;
-        alert(`Congratulations! You've reached level ${userLevel}`);
-    }
-    saveUserStats();
-    displayUserStats();
-}
-
-function saveUserStats() {
-    localStorage.setItem('userPoints', userPoints);
-    localStorage.setItem('userLevel', userLevel);
-}
-
-function loadUserStats() {
-    userPoints = parseInt(localStorage.getItem('userPoints')) || 0;
-    userLevel = parseInt(localStorage.getItem('userLevel')) || 1;
-    displayUserStats();
-}
-
-function displayUserStats() {
-    document.getElementById('user-points').textContent = `Points: ${userPoints}`;
-    document.getElementById('user-level').textContent = `Level: ${userLevel}`;
-}
-
-function addTodoItem(todoText, completed = false) {
-    // 기존 코드 생략
-
-    const completeTaskButton = document.createElement('button');
-    completeTaskButton.textContent = 'Complete';
-    completeTaskButton.addEventListener('click', function() {
-        if (!checkbox.checked) {
-            checkbox.checked = true;
-            newTodo.classList.add('completed');
-            updatePoints(5);
-        }
-    });
-
-    newTodo.appendChild(completeTaskButton);
-    todoList.appendChild(newTodo);
-    saveTodos();
-}
+        <p id="focus-timer"></p>
+        <button id="start-focus">Start Focus Mode</button>
+        <button id="stop-focus">Stop Focus Mode</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
