@@ -1,9 +1,3 @@
-// Initialize user points and level
-let userPoints = 0;
-let userLevel = 1;
-let focusTimer;
-let isFocusMode = false;
-
 document.addEventListener('DOMContentLoaded', () => {
     loadTodos();
     loadUserStats();
@@ -42,94 +36,10 @@ function addTodoItem(todoText, completed = false) {
         saveTodos();
     });
 
-    const completeTaskButton = document.createElement('button');
-    completeTaskButton.textContent = 'Complete';
-    completeTaskButton.addEventListener('click', function() {
-        if (!checkbox.checked) {
-            checkbox.checked = true;
-            newTodo.classList.add('completed');
-            updatePoints(5);
-        }
-    });
-
     newTodo.appendChild(checkbox);
     newTodo.appendChild(todoContent);
-    newTodo.appendChild(completeTaskButton);
     newTodo.appendChild(deleteButton);
 
     todoList.appendChild(newTodo);
     saveTodos();
 }
-
-function updatePoints(points) {
-    userPoints += points;
-    if (userPoints >= userLevel * 10) {
-        userLevel++;
-        alert(`Congratulations! You've reached level ${userLevel}`);
-    }
-    saveUserStats();
-    displayUserStats();
-}
-
-function saveUserStats() {
-    localStorage.setItem('userPoints', userPoints);
-    localStorage.setItem('userLevel', userLevel);
-}
-
-function loadUserStats() {
-    userPoints = parseInt(localStorage.getItem('userPoints')) || 0;
-    userLevel = parseInt(localStorage.getItem('userLevel')) || 1;
-    displayUserStats();
-}
-
-function displayUserStats() {
-    document.getElementById('user-points').textContent = `Points: ${userPoints}`;
-    document.getElementById('user-level').textContent = `Level: ${userLevel}`;
-}
-
-function saveTodos() {
-    const todoList = document.getElementById('todo-list');
-    const todos = [];
-    todoList.childNodes.forEach(item => {
-        const todoText = item.querySelector('span').textContent;
-        const completed = item.querySelector('input').checked;
-        todos.push({ text: todoText, completed });
-    });
-    localStorage.setItem('todos', JSON.stringify(todos));
-}
-
-function loadTodos() {
-    const todos = JSON.parse(localStorage.getItem('todos')) || [];
-    todos.forEach(todo => addTodoItem(todo.text, todo.completed));
-}
-
-function startFocusMode(duration = 25) {
-    if (isFocusMode) return;
-
-    isFocusMode = true;
-    focusTimer = duration * 60;
-    document.getElementById('focus-timer').textContent = `Focus Time: ${duration}:00`;
-
-    const focusInterval = setInterval(() => {
-        if (focusTimer <= 0) {
-            clearInterval(focusInterval);
-            isFocusMode = false;
-            alert('Focus session completed!');
-            document.getElementById('focus-timer').textContent = '';
-            return;
-        }
-        focusTimer--;
-        const minutes = Math.floor(focusTimer / 60);
-        const seconds = focusTimer % 60;
-        document.getElementById('focus-timer').textContent = `Focus Time: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    }, 1000);
-}
-
-function stopFocusMode() {
-    isFocusMode = false;
-    clearInterval(focusTimer);
-    document.getElementById('focus-timer').textContent = '';
-}
-
-document.getElementById('start-focus').addEventListener('click', () => startFocusMode(25));
-document.getElementById('stop-focus').addEventListener('click', stopFocusMode);
