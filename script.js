@@ -1,58 +1,53 @@
-document.addEventListener('DOMContentLoaded', loadTodos);
+// script.js
 
-document.getElementById('add-todo').addEventListener('click', function() {
-    const todoInput = document.getElementById('todo-input');
-    const todoText = todoInput.value.trim();
+let userPoints = 0;
+let userLevel = 1;
 
-    if (todoText !== '') {
-        addTodoItem(todoText);
-        todoInput.value = '';
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    loadTodos();
+    loadUserStats();
 });
 
+function updatePoints(points) {
+    userPoints += points;
+    if (userPoints >= userLevel * 10) {
+        userLevel++;
+        alert(`Congratulations! You've reached level ${userLevel}`);
+    }
+    saveUserStats();
+    displayUserStats();
+}
+
+function saveUserStats() {
+    localStorage.setItem('userPoints', userPoints);
+    localStorage.setItem('userLevel', userLevel);
+}
+
+function loadUserStats() {
+    userPoints = parseInt(localStorage.getItem('userPoints')) || 0;
+    userLevel = parseInt(localStorage.getItem('userLevel')) || 1;
+    displayUserStats();
+}
+
+function displayUserStats() {
+    document.getElementById('user-points').textContent = `Points: ${userPoints}`;
+    document.getElementById('user-level').textContent = `Level: ${userLevel}`;
+}
+
 function addTodoItem(todoText, completed = false) {
-    const todoList = document.getElementById('todo-list');
-    const newTodo = document.createElement('li');
-    newTodo.classList.add(completed ? 'completed' : '');
+    // 기존 코드 생략
 
-    const todoContent = document.createElement('span');
-    todoContent.textContent = todoText;
-
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.addEventListener('click', function() {
-        todoList.removeChild(newTodo);
-        saveTodos();
+    const completeTaskButton = document.createElement('button');
+    completeTaskButton.textContent = 'Complete';
+    completeTaskButton.addEventListener('click', function() {
+        if (!checkbox.checked) {
+            checkbox.checked = true;
+            newTodo.classList.add('completed');
+            updatePoints(5);
+        }
     });
 
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.checked = completed;
-    checkbox.addEventListener('change', function() {
-        newTodo.classList.toggle('completed', checkbox.checked);
-        saveTodos();
-    });
-
-    newTodo.appendChild(checkbox);
-    newTodo.appendChild(todoContent);
-    newTodo.appendChild(deleteButton);
-
+    newTodo.appendChild(completeTaskButton);
     todoList.appendChild(newTodo);
     saveTodos();
-}
-
-function saveTodos() {
-    const todoList = document.getElementById('todo-list');
-    const todos = [];
-    todoList.childNodes.forEach(item => {
-        const todoText = item.querySelector('span').textContent;
-        const completed = item.querySelector('input').checked;
-        todos.push({ text: todoText, completed });
-    });
-    localStorage.setItem('todos', JSON.stringify(todos));
-}
-
-function loadTodos() {
-    const todos = JSON.parse(localStorage.getItem('todos')) || [];
-    todos.forEach(todo => addTodoItem(todo.text, todo.completed));
 }
