@@ -1,4 +1,5 @@
-// script.js
+document.addEventListener('DOMContentLoaded', loadTodos);
+
 document.getElementById('add-todo').addEventListener('click', function() {
     const todoInput = document.getElementById('todo-input');
     const todoText = todoInput.value.trim();
@@ -9,46 +10,10 @@ document.getElementById('add-todo').addEventListener('click', function() {
     }
 });
 
-function addTodoItem(todoText) {
-    const todoList = document.getElementById('todo-list');
-    const newTodo = document.createElement('li');
-
-    const todoContent = document.createElement('span');
-    todoContent.textContent = todoText;
-
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.addEventListener('click', function() {
-        todoList.removeChild(newTodo);
-    });
-
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.addEventListener('change', function() {
-        if (checkbox.checked) {
-            todoContent.style.textDecoration = 'line-through';
-        } else {
-            todoContent.style.textDecoration = 'none';
-        }
-    });
-
-    newTodo.appendChild(checkbox);
-    newTodo.appendChild(todoContent);
-    newTodo.appendChild(deleteButton);
-
-    todoList.appendChild(newTodo);
-}
-
-document.addEventListener('DOMContentLoaded', loadTodos);
-
-function loadTodos() {
-    const todos = JSON.parse(localStorage.getItem('todos')) || [];
-    todos.forEach(todo => addTodoItem(todo.text, todo.completed));
-}
-
 function addTodoItem(todoText, completed = false) {
     const todoList = document.getElementById('todo-list');
     const newTodo = document.createElement('li');
+    newTodo.classList.add(completed ? 'completed' : '');
 
     const todoContent = document.createElement('span');
     todoContent.textContent = todoText;
@@ -63,15 +28,8 @@ function addTodoItem(todoText, completed = false) {
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.checked = completed;
-    if (completed) {
-        todoContent.style.textDecoration = 'line-through';
-    }
     checkbox.addEventListener('change', function() {
-        if (checkbox.checked) {
-            todoContent.style.textDecoration = 'line-through';
-        } else {
-            todoContent.style.textDecoration = 'none';
-        }
+        newTodo.classList.toggle('completed', checkbox.checked);
         saveTodos();
     });
 
@@ -94,14 +52,7 @@ function saveTodos() {
     localStorage.setItem('todos', JSON.stringify(todos));
 }
 
-
-// todo.js
-export function addTodoItem(todoText, completed = false) { ... }
-export function saveTodos() { ... }
-export function loadTodos() { ... }
-
-// script.js
-import { addTodoItem, saveTodos, loadTodos } from './todo.js';
-
-document.addEventListener('DOMContentLoaded', loadTodos);
-document.getElementById('add-todo').addEventListener('click', function() { ... });
+function loadTodos() {
+    const todos = JSON.parse(localStorage.getItem('todos')) || [];
+    todos.forEach(todo => addTodoItem(todo.text, todo.completed));
+}
