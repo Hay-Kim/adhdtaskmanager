@@ -1,24 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo List</title>
-    <link rel="stylesheet" href="style.css">
+    <title>쿠팡 나중결제 입금 완료</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .container {
+            border: 2px solid #4CAF50;
+            padding: 20px;
+            display: inline-block;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        .details {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
 </head>
 <body>
-    <div class="todo-container">
-        <h1>Todo List</h1>
-        <p id="user-points">Points: 0</p>
-        <p id="user-level">Level: 1</p>
-        <input type="text" id="todo-input" placeholder="Enter a new task">
-        <button id="add-todo">Add Task</button>
-        <ul id="todo-list"></ul>
-
-        <p id="focus-timer"></p>
-        <button id="start-focus">Start Focus Mode</button>
-        <button id="stop-focus">Stop Focus Mode</button>
+    <div class="container">
+        <h1>입금 완료</h1>
+        <p>고객님의 쿠팡 나중결제 미납 금액이 정상적으로 처리되었습니다.</p>
+        <div class="details">
+            <p><strong>결제 금액:</strong> 50,610원</p>
+            <p><strong>입금 일자:</strong> 2025년 2월 7일</p>
+            <p><strong>주문 번호:</strong> CP-20250207-001</p>
+        </div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
