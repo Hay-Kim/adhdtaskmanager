@@ -7,17 +7,37 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
+            margin: 0;
             background-color: #f8f9fa;
         }
+        .header {
+            background-color: #0074e9;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header img {
+            height: 40px;
+        }
+        .nav {
+            display: flex;
+            gap: 20px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
         .container {
-            border: 2px solid #0074e9;
+            max-width: 800px;
+            margin: 50px auto;
             padding: 20px;
-            display: inline-block;
-            border-radius: 10px;
+            border: 2px solid #0074e9;
+            border-radius: 0;
             background-color: #ffffff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
         h1 {
             color: #0074e9;
@@ -27,10 +47,6 @@
             font-size: 18px;
             text-align: left;
         }
-        .logo {
-            width: 150px;
-            margin-bottom: 20px;
-        }
         .order-item {
             border-bottom: 1px solid #ddd;
             padding: 10px 0;
@@ -38,8 +54,16 @@
     </style>
 </head>
 <body>
+    <div class="header">
+        <img src="https://image.coupangcdn.com/image/coupang/common/logo_coupang_w350.png" alt="Coupang Logo">
+        <div class="nav">
+            <a href="#">마이 쿠팡</a>
+            <a href="#">주문목록</a>
+            <a href="#">장바구니</a>
+            <a href="#">고객센터</a>
+        </div>
+    </div>
     <div class="container">
-        <img class="logo" src="https://image.coupangcdn.com/image/coupang/common/logo_coupang_w350.png" alt="Coupang Logo">
         <h1>입금 완료</h1>
         <p>고객님의 쿠팡 나중결제 미납 금액이 정상적으로 처리되었습니다.</p>
         <div class="details">
